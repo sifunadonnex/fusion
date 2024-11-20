@@ -14,6 +14,7 @@ class ActionPlanPage extends Component
     use WithPagination;
     private const REQUIRED_STRING = 'required|string';
     public $showActionPlanModal = false;
+    public $showActionPlanDetailsModal = false;
     public $actionPlanId;
     public $status;
     public $assigned_to;
@@ -60,6 +61,7 @@ class ActionPlanPage extends Component
     public $filterByAssignedTo = '';
     public $filterByCreatedBy = '';
     public $filterBySource = '';
+    public $actionPlan = [];
 
     public function createActionPlan()
     {
@@ -85,6 +87,19 @@ class ActionPlanPage extends Component
         $this->finding = '';
         $this->grade = 'level1';
         $this->completedBy = '';
+    }
+
+    public function showActionPlanDetails($id)
+    {
+        $this->actionPlan = Cap::find($id)->toArray();
+        // decode the cc users
+        $this->actionPlan['IdCCUsers'] = json_decode($this->actionPlan['IdCCUsers']);
+        $this->showActionPlanDetailsModal = true;
+    }
+
+    public function closeActionPlanDetailsModal()
+    {
+        $this->showActionPlanDetailsModal = false;
     }
     // get users
     #[Computed('actionPlans')]
@@ -135,6 +150,14 @@ class ActionPlanPage extends Component
 
         // After saving, close the modal
         $this->showActionPlanModal = false;
+    }
+    public function refreshCriteria()
+    {
+        $this->search = '';
+        $this->actionStatus = '';
+        $this->filterByAssignedTo = '';
+        $this->filterByCreatedBy = '';
+        $this->filterBySource = '';
     }
 
     public function updatedSearch()

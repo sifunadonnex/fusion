@@ -25,9 +25,11 @@
             <div class="flex justify-between items-start">
                 <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Criteria</h4>
                 {{-- refresh --}}
-                <button  wire:click="$refresh" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                <button wire:click="refreshCriteria"
+                    class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
                     <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24">
-                        <path fill="#f06305" d="M3.68 11.333h-.75zm0 1.667l-.528.532a.75.75 0 0 0 1.056 0zm2.208-1.134A.75.75 0 1 0 4.83 10.8zM2.528 10.8a.75.75 0 0 0-1.056 1.065zm16.088-3.408a.75.75 0 1 0 1.277-.786zM12.079 2.25c-5.047 0-9.15 4.061-9.15 9.083h1.5c0-4.182 3.42-7.583 7.65-7.583zm-9.15 9.083V13h1.5v-1.667zm1.28 2.2l1.679-1.667L4.83 10.8l-1.68 1.667zm0-1.065L2.528 10.8l-1.057 1.065l1.68 1.666zm15.684-5.86A9.16 9.16 0 0 0 12.08 2.25v1.5a7.66 7.66 0 0 1 6.537 3.643zM20.314 11l.527-.533a.75.75 0 0 0-1.054 0zM18.1 12.133a.75.75 0 0 0 1.055 1.067zm3.373 1.067a.75.75 0 1 0 1.054-1.067zM5.318 16.606a.75.75 0 1 0-1.277.788zm6.565 5.144c5.062 0 9.18-4.058 9.18-9.083h-1.5c0 4.18-3.43 7.583-7.68 7.583zm9.18-9.083V11h-1.5v1.667zm-1.276-2.2L18.1 12.133l1.055 1.067l1.686-1.667zm0 1.066l1.686 1.667l1.054-1.067l-1.686-1.666zM4.04 17.393a9.2 9.2 0 0 0 7.842 4.357v-1.5a7.7 7.7 0 0 1-6.565-3.644z" />
+                        <path fill="#f06305"
+                            d="M3.68 11.333h-.75zm0 1.667l-.528.532a.75.75 0 0 0 1.056 0zm2.208-1.134A.75.75 0 1 0 4.83 10.8zM2.528 10.8a.75.75 0 0 0-1.056 1.065zm16.088-3.408a.75.75 0 1 0 1.277-.786zM12.079 2.25c-5.047 0-9.15 4.061-9.15 9.083h1.5c0-4.182 3.42-7.583 7.65-7.583zm-9.15 9.083V13h1.5v-1.667zm1.28 2.2l1.679-1.667L4.83 10.8l-1.68 1.667zm0-1.065L2.528 10.8l-1.057 1.065l1.68 1.666zm15.684-5.86A9.16 9.16 0 0 0 12.08 2.25v1.5a7.66 7.66 0 0 1 6.537 3.643zM20.314 11l.527-.533a.75.75 0 0 0-1.054 0zM18.1 12.133a.75.75 0 0 0 1.055 1.067zm3.373 1.067a.75.75 0 1 0 1.054-1.067zM5.318 16.606a.75.75 0 1 0-1.277.788zm6.565 5.144c5.062 0 9.18-4.058 9.18-9.083h-1.5c0 4.18-3.43 7.583-7.68 7.583zm9.18-9.083V11h-1.5v1.667zm-1.276-2.2L18.1 12.133l1.055 1.067l1.686-1.667zm0 1.066l1.686 1.667l1.054-1.067l-1.686-1.666zM4.04 17.393a9.2 9.2 0 0 0 7.842 4.357v-1.5a7.7 7.7 0 0 1-6.565-3.644z" />
                     </svg>
                 </button>
             </div>
@@ -68,7 +70,8 @@
                                     <a class="block text
                                 @if ($user->id == auth()->user()->id) {{ 'text-violet-500' }}@else{{ 'text-gray-500/90 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200' }} @endif
                                 transition truncate"
-                                    href="#" wire:click.prevent="$set('filterByAssignedTo', {{ $user->id }})">
+                                        href="#"
+                                        wire:click.prevent="$set('filterByAssignedTo', {{ $user->id }})">
                                         <span
                                             class="text-sm font-medium lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">{{ $user->name }}</span>
                                     </a>
@@ -115,7 +118,8 @@
                                     <a class="block text
                                 @if ($user->id == auth()->user()->id) {{ 'text-violet-500' }}@else{{ 'text-gray-500/90 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200' }} @endif
                                 transition truncate"
-                                        href="#" wire:click.prevent="$set('filterByCreatedBy', {{ $user->id }})">
+                                        href="#"
+                                        wire:click.prevent="$set('filterByCreatedBy', {{ $user->id }})">
                                         <span
                                             class="text-sm font-medium lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">{{ $user->name }}</span>
                                     </a>
@@ -240,13 +244,12 @@
                             @foreach ($sourceList as $source)
                                 <li class="mb-1 last:mb-0">
                                     <a class="block text text-gray-500/90 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition truncate"
-                                        href="#" wire:click.prevent="$set('filterBySource', '{{ $source }}')">
+                                        href="#"
+                                        wire:click.prevent="$set('filterBySource', '{{ $source }}')">
                                         <span
                                             class="text-sm font-medium lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">{{ $source }}</span>
                                     </a>
                                 </li>
-
-                                
                             @endforeach
                         </ul>
                     </div>
@@ -366,8 +369,8 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
                     @foreach ($actionPlans as $actionPlan)
                         {{-- cards for each action plan --}}
-                        <div
-                            class="bg-white dark:bg-gray-800 shadow overflow-hidden rounded-md sm:rounded-lg gap-2 flex flex-col p-4">
+                        <div wire:click="showActionPlanDetails({{ $actionPlan->id }})"
+                            class="bg-white dark:bg-gray-800 cursor-pointer shadow overflow-hidden rounded-md sm:rounded-lg gap-2 flex flex-col p-4">
                             <div class="flex justify-between">
                                 <div class="flex items-center gap-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
@@ -506,9 +509,9 @@
                         })" wire:model.live="source"
                             name="source" id="source" style="width: 100%" class="form-input">
                             <option value="">Select a Source</option>
-                        @foreach ($sourceList as $source)
-                            <option value="{{ $source }}">{{ $source }}</option>
-                        @endforeach
+                            @foreach ($sourceList as $source)
+                                <option value="{{ $source }}">{{ $source }}</option>
+                            @endforeach
                         </select>
                         @error('source')
                             <span class="text-red-700">{{ $message }}</span>
@@ -561,8 +564,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 ">
                     <div>
                         <label for="completed_by"
-                            class="block text
-                        -sm font-medium text-gray-700 dark:text-gray-200">Completed
+                            class="block text-sm font-medium text-gray-700 dark:text-gray-200">Completed
                             By</label>
                         <input type="date" wire:model="completedBy" id="completed_by" name="completed_by"
                             class="form-input w-full" placeholder="Completed By">
@@ -576,25 +578,262 @@
         <div class="flex justify-end px-6 gap-3 py-4 bg-gray-100 dark:bg-gray-800">
             <button wire:click="closeActionPlanModal"
                 class="btn bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600">Cancel</button>
-            <button wire:click="saveActionPlan" wire:loading.attr="disabled" class="btn bg-orange-600 flex items-center gap-2 text-white hover:bg-orange-700">Save
+            <button wire:click="saveActionPlan" wire:loading.attr="disabled"
+                class="btn bg-orange-600 flex items-center gap-2 text-white hover:bg-orange-700">Save
                 <div wire:loading wire:target="saveActionPlan">
                     <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24">
                         <circle cx="18" cy="12" r="0" fill="#ffff">
-                            <animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0" />
+                            <animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s"
+                                keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
+                                values="0;2;0;0" />
                         </circle>
                         <circle cx="12" cy="12" r="0" fill="#ffff">
-                            <animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0" />
+                            <animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s"
+                                keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
+                                values="0;2;0;0" />
                         </circle>
                         <circle cx="6" cy="12" r="0" fill="#ffff">
-                            <animate attributeName="r" begin="0" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0" />
+                            <animate attributeName="r" begin="0" calcMode="spline" dur="1.5s"
+                                keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
+                                values="0;2;0;0" />
                         </circle>
                     </svg>
                 </div>
             </button>
         </div>
     </x-modal>
+    {{-- Action plan Modal with tabs: Details, Report --}}
+    <x-modal wire:model="showActionPlanDetailsModal" id="ActionPlanDetailsModal" maxWidth="4xl">
+        <div class="p-6" x-data="{tab: 0}">
+                {{-- tabs for details, attachments, report --}}
+                <div class="flex items
+                -center gap-4">
+                    <button @click="tab = 0"
+                        :class="{ 'bg-orange-600 text-white': tab === 0, 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600': tab !== 0 }"
+                        class="btn">Details</button>
+                    <button @click="tab = 1"
+                        :class="{ 'bg-orange-600 text-white': tab === 1, 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600': tab !== 1 }"
+                        class="btn">Attachments</button>
+                    <button @click="tab = 2"
+                        :class="{ 'bg-orange-600 text-white': tab === 2, 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600': tab !== 2 }"
+                        class="btn">Report</button>
+                </div>
+            <div class="mt-4 flex flex-col gap-4" x-show="tab === 0">
+                <div
+                    class="bg-white dark:bg-gray-800 cursor-pointer shadow overflow-hidden rounded-md sm:rounded-lg p-4">
+                    <p class="text-sm text-gray-500 dark:text-gray-300">File Details</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 ">
+                        <div>
+                            <label for="action_plan_id"
+                                class="block text-sm font-medium text-gray-700 dark:text-gray-200">Action
+                                Plan ID</label>
+                            <input type="text" wire:model="actionPlan.CAPName" id="action_plan_id"
+                                name="action_plan_id" class="form-input w-full" placeholder="Action Plan ID"
+                                disabled>
+                        </div>
+                        <div>
+                            <label for="status"
+                                class="block text-sm font-medium text-gray-700 dark:text-gray-200">Status</label>
+                            <select wire:model="actionPlan.CAPStatusId" id="status" name="status" class="form-select w-full"
+                                disabled>
+                                <option value="open">Open</option>
+                                <option value="closed">Closed</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="assigned_to"
+                                class="block text-sm font-medium text-gray-700 dark:text-gray-200">Assigned To</label>
+                            <select wire:model="actionPlan.ResponsiblePersonId" id="assigned_to" name="assigned_to"
+                                class="form-select w-full" disabled>
+                                @foreach ($users as $user)
+                                    <option value={{ $user->id }}>{{ $user->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label for="source"
+                                class="block text-sm font-medium text-gray-700 dark:text-gray-200">Source</label>
+                            <input type="text" wire:model="actionPlan.ReportSource" id="source" name="source"
+                                class="form-input w-full" placeholder="Source" disabled>
+                        </div>
+                        <div class="col-span-2" wire:ignore>
+                            <label for="cc"
+                                class="block text-sm font-medium text-gray-700 dark:text-gray-200">CC</label>
+                            <select multiple wire:model="actionPlan.IdCCUsers" name="cc"
+                                class="cc" disabled style="width: 100%">
+                                @foreach ($users as $user)
+                                    <option value="{{ $user['id'] }}" wire:key="cc-{{ $user['id'] }}">
+                                        {{ $user['name'] }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="bg-white dark:bg-gray-800 cursor-pointer shadow overflow-hidden rounded-md sm:rounded-lg p-4">
+                    <p class="text-sm text-gray-500 dark:text-gray-300">Nonconformity</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="finding"
+                                class="block text-sm font-medium text-gray-700 dark:text-gray-200">Finding</label>
+                            <input type="text" wire:model="actionPlan.Finding" id="finding" name="finding"
+                                class="form-input w-full" placeholder="Finding" disabled>
+                        </div>
+                        <div>
+                            <label for="grade"
+                                class="block text-sm font-medium text-gray-700 dark:text-gray-200">Grade</label>
+                            <div class="flex items-center gap-2">
+                                <select wire:model="actionPlan.FindingGradeId" id="grade" name="grade" class="form-select w-full"
+                                    disabled>
+                                    <option value="level1">Level I</option>
+                                    <option value="level2">Level II</option>
+                                    <option value="level3">Level III</option>
+                                </select>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="2.5em" height="2.5em"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        fill="{{ // level 1: yellow, level 2: orange, level 3: red
+                                            $grade == 'level1' ? 'yellow' : ($grade == 'level2' ? 'orange' : 'red') }}"
+                                        d="M12.003 21q-1.866 0-3.51-.708q-1.643-.709-2.859-1.924t-1.925-2.856T3 12.003t.709-3.51Q4.417 6.85 5.63 5.634t2.857-1.925T11.997 3t3.51.709q1.643.708 2.859 1.922t1.925 2.857t.709 3.509t-.708 3.51t-1.924 2.859t-2.856 1.925t-3.509.709" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="bg-white dark:bg-gray-800 cursor-pointer shadow overflow-hidden rounded-md sm:rounded-lg p-4">
+                    <p class="text-sm text-gray-500 dark:text-gray-300">Correction</p>
+                    <div class="grid grid-cols-1 gap-4 ">
+                        <div>
+                            <label for="correction"
+                                class="block text-sm font-medium text-gray-700 dark:text-gray-200">Correction</label>
+                            <input type="text" wire:model="correction" id="correction" name="correction"
+                                class="form-input w-full" placeholder="Correction" disabled>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 ">
+                            <div>
+                                <label for="completed_by"
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-200">Complete
+                                    By</label>
+                                <input type="date" wire:model="completedBy" id="completed_by" name="completed_by"
+                                    class="form-input w-full" placeholder="Completed By" disabled>
+                            </div>
+                            <div>
+                                <label for="completed_by"
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-200">Completed
+                                    On</label>
+                                <input type="date" wire:model="completedBy" id="completed_by" name="completed_by"
+                                    class="form-input w-full" placeholder="Completed By" disabled>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-start">
+                            {{-- planned, completed buttons --}}
+                            <div class="flex items-center gap-2">
+                                <button
+                                    class="btn bg-green-100 text-green-800 hover:bg-green-200 dark:hover:bg-green-700">Planned</button>
+                                <button
+                                    class="btn bg-green-100 text-green-800 hover:bg-green-200 dark:hover:bg-green-700">Completed</button>
+                            </div>
+                            {{-- root cause, CA check boxes --}}
+                            <div class="flex items-center gap-2">
+                                <label for="root_cause"
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-200">Root
+                                    Cause</label>
+                                <input type="checkbox" wire:model="rootCause" id="root_cause" name="root_cause"
+                                    class="form-checkbox w-6 h-6 text-green-500" disabled>
+                                <label for="ca"
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-200">CA</label>
+                                <input type="checkbox" wire:model="ca" id="ca" name="ca"
+                                    class="form-checkbox w-6 h-6 text-green-500" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- Root Cause Analysis --}}
+                <div
+                    class="bg-white dark:bg-gray-800 cursor-pointer shadow overflow-hidden rounded-md sm:rounded-lg p-4">
+                    <p class="text-sm text-gray-500 dark:text-gray-300">Root Cause Analysis</p>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div>
+                            <label for="root_cause"
+                                class="block text-sm font-medium text-gray-700 dark:text-gray-200">Analysis</label>
+                            <input type="textarea" wire:model="rootCauseAnalysis" id="root_cause" name="root_cause"
+                                class="form-input w-full" placeholder="Root Cause Analysis" disabled>
+                        </div>
+                    </div>
+                </div>
+                   {{-- Corrective Action --}}
+                <div
+                    class="bg-white dark:bg-gray-800 cursor-pointer shadow overflow-hidden rounded-md sm:rounded-lg p-4">
+                    <p class="text-sm text-gray-500 dark:text-gray-300">Corrective Action</p>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div>
+                            <label for="corrective_action"
+                                class="block text-sm font-medium text-gray-700 dark:text-gray-200"> Action</label>
+                            <input type="textarea" wire:model="correctiveAction" id="corrective_action" name="corrective_action"
+                                class="form-input w-full" placeholder="Corrective Action" disabled>
+                        </div>
+                        {{-- complete by, completed on --}}
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="complete_by"
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-200">Complete
+                                    By</label>
+                                <input type="date" wire:model="completeBy" id="complete_by" name="complete_by"
+                                    class="form-input w-full" placeholder="Complete By" disabled>
+                            </div>
+                            <div>
+                                <label for="completed_on"
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-200">Completed
+                                    On</label>
+                                <input type="date" wire:model="completedOn" id="completed_on" name="completed_on"
+                                    class="form-input w-full" placeholder="Completed On" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4 flex flex-col gap-4" x-show="tab === 1">
+                <div
+                    class="bg-white dark:bg-gray-800 cursor-pointer shadow overflow-hidden rounded-md sm:rounded-lg p-4">
+                    <p class="text-sm text-gray-500 dark:text-gray-300">Attachments</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="attachment"
+                                class="block text-sm font-medium text-gray-700 dark:text-gray-200">Attachment</label>
+                            <input type="file" wire:model="attachment" id="attachment" name="attachment"
+                                class="form-input w-full" placeholder="Attachment" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4 flex flex-col gap-4" x-show="tab === 2">
+                <div
+                    class="bg-white dark:bg-gray-800 cursor-pointer shadow overflow-hidden rounded-md sm:rounded-lg p-4">
+                    <p class="text-sm text-gray-500 dark:text-gray-300">Report</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="report"
+                                class="block text-sm font-medium text-gray-700 dark:text-gray-200">Report</label>
+                            <input type="text" wire:model="report" id="report" name="report"
+                                class="form-input w-full" placeholder="Report" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex justify-end px-6 gap-3 py-4 bg-gray-100 dark:bg-gray-800">
+            <button wire:click="closeActionPlanDetailsModal"
+                class="btn bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600">Close</button>
+        </div>
+    </x-modal>
     <script>
+        
         $(document).ready(function() {
+            $('.cc').select2({
+                allowClear: true,
+                dropdownParent: $('#ActionPlanDetailsModal')
+            });
             $('#cc').on('change', function(e) {
                 var data = $(this).select2("val");
                 @this.set('cc', data, false);
