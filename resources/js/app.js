@@ -36,6 +36,8 @@ Chart.defaults.plugins.tooltip.caretPadding = 20;
 Chart.defaults.plugins.tooltip.cornerRadius = 8;
 Chart.defaults.plugins.tooltip.padding = 8;
 
+
+
 // Function that generates a gradient for line charts
 export const chartAreaGradient = (ctx, chartArea, colorStops) => {
   if (!ctx || !chartArea || !colorStops || colorStops.length === 0) {
