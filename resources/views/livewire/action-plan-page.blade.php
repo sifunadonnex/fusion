@@ -604,20 +604,35 @@
     </x-modal>
     {{-- Action plan Modal with tabs: Details, Report --}}
     <x-modal wire:model="showActionPlanDetailsModal" id="ActionPlanDetailsModal" maxWidth="4xl">
-        <div class="p-6" x-data="{tab: 0}">
-                {{-- tabs for details, attachments, report --}}
-                <div class="flex items
+        <div class="p-6" x-data="{ tab: 0 }">
+            {{-- tabs for details, attachments, report --}}
+            <div class="flex items
                 -center gap-4">
-                    <button @click="tab = 0"
-                        :class="{ 'bg-orange-600 text-white': tab === 0, 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600': tab !== 0 }"
-                        class="btn">Details</button>
-                    <button @click="tab = 1"
-                        :class="{ 'bg-orange-600 text-white': tab === 1, 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600': tab !== 1 }"
-                        class="btn">Attachments</button>
-                    <button @click="tab = 2"
-                        :class="{ 'bg-orange-600 text-white': tab === 2, 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600': tab !== 2 }"
-                        class="btn">Report</button>
-                </div>
+                <button @click="tab = 0"
+                    :class="{
+                        'bg-orange-600 text-white': tab ===
+                            0,
+                        'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600': tab !==
+                            0
+                    }"
+                    class="btn">Details</button>
+                <button @click="tab = 1"
+                    :class="{
+                        'bg-orange-600 text-white': tab ===
+                            1,
+                        'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600': tab !==
+                            1
+                    }"
+                    class="btn">Attachments</button>
+                <button @click="tab = 2"
+                    :class="{
+                        'bg-orange-600 text-white': tab ===
+                            2,
+                        'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600': tab !==
+                            2
+                    }"
+                    class="btn">Report</button>
+            </div>
             <div class="mt-4 flex flex-col gap-4" x-show="tab === 0">
                 <div
                     class="bg-white dark:bg-gray-800 cursor-pointer shadow overflow-hidden rounded-md sm:rounded-lg p-4">
@@ -634,8 +649,8 @@
                         <div>
                             <label for="status"
                                 class="block text-sm font-medium text-gray-700 dark:text-gray-200">Status</label>
-                            <select wire:model="actionPlan.CAPStatusId" id="status" name="status" class="form-select w-full"
-                                disabled>
+                            <select wire:model="actionPlan.CAPStatusId" id="status" name="status"
+                                class="form-select w-full" disabled>
                                 <option value="open">Open</option>
                                 <option value="closed">Closed</option>
                             </select>
@@ -659,8 +674,8 @@
                         <div class="col-span-2" wire:ignore>
                             <label for="cc"
                                 class="block text-sm font-medium text-gray-700 dark:text-gray-200">CC</label>
-                            <select multiple wire:model="actionPlan.IdCCUsers" name="cc"
-                                class="cc" disabled style="width: 100%">
+                            <select multiple wire:model="cc" name="cc" class="cc" disabled
+                                style="width: 100%">
                                 @foreach ($users as $user)
                                     <option value="{{ $user['id'] }}" wire:key="cc-{{ $user['id'] }}">
                                         {{ $user['name'] }}</option>
@@ -673,7 +688,7 @@
                     class="bg-white dark:bg-gray-800 cursor-pointer shadow overflow-hidden rounded-md sm:rounded-lg p-4">
                     <p class="text-sm text-gray-500 dark:text-gray-300">Nonconformity</p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
+                        <div class="md:col-span-2">
                             <label for="finding"
                                 class="block text-sm font-medium text-gray-700 dark:text-gray-200">Finding</label>
                             <input type="text" wire:model="actionPlan.Finding" id="finding" name="finding"
@@ -683,8 +698,8 @@
                             <label for="grade"
                                 class="block text-sm font-medium text-gray-700 dark:text-gray-200">Grade</label>
                             <div class="flex items-center gap-2">
-                                <select wire:model="actionPlan.FindingGradeId" id="grade" name="grade" class="form-select w-full"
-                                    disabled>
+                                <select wire:model="actionPlan.FindingGradeId" id="grade" name="grade"
+                                    class="form-select w-full" disabled>
                                     <option value="level1">Level I</option>
                                     <option value="level2">Level II</option>
                                     <option value="level3">Level III</option>
@@ -693,7 +708,7 @@
                                     viewBox="0 0 24 24">
                                     <path
                                         fill="{{ // level 1: yellow, level 2: orange, level 3: red
-                                            $grade == 'level1' ? 'yellow' : ($grade == 'level2' ? 'orange' : 'red') }}"
+                                            $reportGrade === 'level1' ? 'yellow' : ($reportGrade === 'level2' ? 'orange' : 'red') }}"
                                         d="M12.003 21q-1.866 0-3.51-.708q-1.643-.709-2.859-1.924t-1.925-2.856T3 12.003t.709-3.51Q4.417 6.85 5.63 5.634t2.857-1.925T11.997 3t3.51.709q1.643.708 2.859 1.922t1.925 2.857t.709 3.509t-.708 3.51t-1.924 2.859t-2.856 1.925t-3.509.709" />
                                 </svg>
                             </div>
@@ -739,86 +754,268 @@
                                 <label for="root_cause"
                                     class="block text-sm font-medium text-gray-700 dark:text-gray-200">Root
                                     Cause</label>
-                                <input type="checkbox" wire:model="rootCause" id="root_cause" name="root_cause"
+                                <input type="checkbox" wire:model="isRootCause" id="root_cause" name="root_cause"
                                     class="form-checkbox w-6 h-6 text-green-500" disabled>
                                 <label for="ca"
                                     class="block text-sm font-medium text-gray-700 dark:text-gray-200">CA</label>
-                                <input type="checkbox" wire:model="ca" id="ca" name="ca"
+                                <input type="checkbox" wire:model="isCA" id="ca" name="ca"
                                     class="form-checkbox w-6 h-6 text-green-500" disabled>
                             </div>
                         </div>
                     </div>
                 </div>
                 {{-- Root Cause Analysis --}}
+                @if ($isRootCause)
                 <div
-                    class="bg-white dark:bg-gray-800 cursor-pointer shadow overflow-hidden rounded-md sm:rounded-lg p-4">
-                    <p class="text-sm text-gray-500 dark:text-gray-300">Root Cause Analysis</p>
-                    <div class="grid grid-cols-1 gap-4">
-                        <div>
-                            <label for="root_cause"
-                                class="block text-sm font-medium text-gray-700 dark:text-gray-200">Analysis</label>
-                            <input type="textarea" wire:model="rootCauseAnalysis" id="root_cause" name="root_cause"
-                                class="form-input w-full" placeholder="Root Cause Analysis" disabled>
-                        </div>
+                class="bg-white dark:bg-gray-800 cursor-pointer shadow overflow-hidden rounded-md sm:rounded-lg p-4">
+                <p class="text-sm text-gray-500 dark:text-gray-300">Root Cause Analysis</p>
+                <div class="grid grid-cols-1 gap-4">
+                    <div>
+                        <label for="root_cause"
+                            class="block text-sm font-medium text-gray-700 dark:text-gray-200">Analysis</label>
+                        <input type="textarea" wire:model="actionPlan.rootCauseAnalysis" id="root_cause" name="root_cause"
+                            class="form-input w-full" placeholder="Root Cause Analysis" disabled>
                     </div>
                 </div>
-                   {{-- Corrective Action --}}
-                <div
-                    class="bg-white dark:bg-gray-800 cursor-pointer shadow overflow-hidden rounded-md sm:rounded-lg p-4">
-                    <p class="text-sm text-gray-500 dark:text-gray-300">Corrective Action</p>
-                    <div class="grid grid-cols-1 gap-4">
-                        <div>
-                            <label for="corrective_action"
-                                class="block text-sm font-medium text-gray-700 dark:text-gray-200"> Action</label>
-                            <input type="textarea" wire:model="correctiveAction" id="corrective_action" name="corrective_action"
-                                class="form-input w-full" placeholder="Corrective Action" disabled>
-                        </div>
-                        {{-- complete by, completed on --}}
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label for="complete_by"
-                                    class="block text-sm font-medium text-gray-700 dark:text-gray-200">Complete
-                                    By</label>
-                                <input type="date" wire:model="completeBy" id="complete_by" name="complete_by"
-                                    class="form-input w-full" placeholder="Complete By" disabled>
-                            </div>
-                            <div>
-                                <label for="completed_on"
-                                    class="block text-sm font-medium text-gray-700 dark:text-gray-200">Completed
-                                    On</label>
-                                <input type="date" wire:model="completedOn" id="completed_on" name="completed_on"
-                                    class="form-input w-full" placeholder="Completed On" disabled>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            </div>
+                @endif
+                {{-- Corrective Action --}}
+               @if ($isCA)
+               <div
+               class="bg-white dark:bg-gray-800 cursor-pointer shadow overflow-hidden rounded-md sm:rounded-lg p-4">
+               <p class="text-sm text-gray-500 dark:text-gray-300">Corrective Action</p>
+               <div class="grid grid-cols-1 gap-4">
+                   <div>
+                       <label for="corrective_action"
+                           class="block text-sm font-medium text-gray-700 dark:text-gray-200"> Action</label>
+                       <input type="textarea" wire:model="correctiveAction" id="corrective_action"
+                           name="corrective_action" class="form-input w-full" placeholder="Corrective Action"
+                           disabled>
+                   </div>
+                   {{-- complete by, completed on --}}
+                   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                       <div>
+                           <label for="complete_by"
+                               class="block text-sm font-medium text-gray-700 dark:text-gray-200">Complete
+                               By</label>
+                           <input type="date" wire:model="completeBy" id="complete_by" name="complete_by"
+                               class="form-input w-full" placeholder="Complete By" disabled>
+                       </div>
+                       <div>
+                           <label for="completed_on"
+                               class="block text-sm font-medium text-gray-700 dark:text-gray-200">Completed
+                               On</label>
+                           <input type="date" wire:model="completedOn" id="completed_on" name="completed_on"
+                               class="form-input w-full" placeholder="Completed On" disabled>
+                       </div>
+                   </div>
+               </div>
+           </div>
+               @endif
             </div>
             <div class="mt-4 flex flex-col gap-4" x-show="tab === 1">
                 <div
                     class="bg-white dark:bg-gray-800 cursor-pointer shadow overflow-hidden rounded-md sm:rounded-lg p-4">
-                    <p class="text-sm text-gray-500 dark:text-gray-300">Attachments</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-300 mb-3">Attachments</p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label for="attachment"
-                                class="block text-sm font-medium text-gray-700 dark:text-gray-200">Attachment</label>
-                            <input type="file" wire:model="attachment" id="attachment" name="attachment"
-                                class="form-input w-full" placeholder="Attachment" disabled>
+                            <label for="uploadFile1"
+                                class="bg-white text-gray-500 font-semibold text-base rounded max-w-md h-52 flex flex-col items-center justify-center cursor-pointer border-2 border-gray-300 border-dashed mx-auto font-[sans-serif]">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-11 mb-2 fill-gray-500"
+                                    viewBox="0 0 32 32">
+                                    <path
+                                        d="M23.75 11.044a7.99 7.99 0 0 0-15.5-.009A8 8 0 0 0 9 27h3a1 1 0 0 0 0-2H9a6 6 0 0 1-.035-12 1.038 1.038 0 0 0 1.1-.854 5.991 5.991 0 0 1 11.862 0A1.08 1.08 0 0 0 23 13a6 6 0 0 1 0 12h-3a1 1 0 0 0 0 2h3a8 8 0 0 0 .75-15.956z"
+                                        data-original="#000000" />
+                                    <path
+                                        d="M20.293 19.707a1 1 0 0 0 1.414-1.414l-5-5a1 1 0 0 0-1.414 0l-5 5a1 1 0 0 0 1.414 1.414L15 16.414V29a1 1 0 0 0 2 0V16.414z"
+                                        data-original="#000000" />
+                                </svg>
+                                Upload file
+
+                                <input type="file" id='uploadFile1' class="hidden" />
+                                <p class="text-xs font-medium text-gray-400 mt-2">or drag and drop</p>
+                            </label>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="mt-4 flex flex-col gap-4" x-show="tab === 2">
-                <div
-                    class="bg-white dark:bg-gray-800 cursor-pointer shadow overflow-hidden rounded-md sm:rounded-lg p-4">
-                    <p class="text-sm text-gray-500 dark:text-gray-300">Report</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label for="report"
-                                class="block text-sm font-medium text-gray-700 dark:text-gray-200">Report</label>
-                            <input type="text" wire:model="report" id="report" name="report"
-                                class="form-input w-full" placeholder="Report" disabled>
-                        </div>
-                    </div>
+                {{-- print and download icons buttons --}}
+                <div class="flex justify-end gap-4">
+                    <button onclick="printReport()"
+                        class="btn bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1.8em" height="1.8em" viewBox="0 0 24 24">
+                            <g fill="none">
+                                <path fill="#f06305"
+                                    d="M4 10c0-1.886 0-2.828.586-3.414S6.114 6 8 6h8c1.886 0 2.828 0 3.414.586S20 8.114 20 10v2c0 .943 0 1.414-.293 1.707S18.943 14 18 14h-.7c-.141 0-.212 0-.256-.044S17 13.841 17 13.7V13c0-.943 0-1.414-.293-1.707S15.943 11 15 11H9c-.943 0-1.414 0-1.707.293S7 12.057 7 13v.7c0 .141 0 .212-.044.256S6.841 14 6.7 14H5c-.471 0-.707 0-.854-.146C4 13.707 4 13.47 4 13z" />
+                                <path fill="#f06305" fill-opacity="0.25"
+                                    d="M7 20.262V13c0-.943 0-1.414.293-1.707S8.057 11 9 11h6c.943 0 1.414 0 1.707.293S17 12.057 17 13v7.262c0 .334 0 .501-.11.576s-.265.012-.576-.112l-1.628-.652a.5.5 0 0 0-.186-.055a.5.5 0 0 0-.186.055l-2.128.852a.5.5 0 0 1-.186.055a.5.5 0 0 1-.186-.055l-2.128-.852a.5.5 0 0 0-.186-.055a.5.5 0 0 0-.186.055l-1.628.652c-.311.124-.466.186-.576.112c-.11-.075-.11-.242-.11-.576" />
+                                <path stroke="#f06305" stroke-linecap="round" d="M9.5 14.5h4m-4 3h5" />
+                                <path fill="#f06305"
+                                    d="M7 4.74c0-.693 0-1.039.164-1.288a1 1 0 0 1 .288-.288C7.702 3 8.047 3 8.739 3h6.522c.692 0 1.038 0 1.288.164a1 1 0 0 1 .287.288c.164.25.164.595.164 1.287c0 .104 0 .156-.025.193a.2.2 0 0 1-.043.043C16.895 5 16.842 5 16.74 5H7.261c-.104 0-.156 0-.193-.025a.2.2 0 0 1-.043-.043C7 4.895 7 4.842 7 4.74" />
+                            </g>
+                        </svg>
+                    </button>
+                    <button onclick="downloadPDF('#report','{{ $actionPlan->CAPName }}')"
+                        class="btn bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1.8em" height="1.8em" viewBox="0 0 24 24">
+                            <path fill="#f06305"
+                                d="m12 16l-5-5l1.4-1.45l2.6 2.6V4h2v8.15l2.6-2.6L17 11zm-6 4q-.825 0-1.412-.587T4 18v-3h2v3h12v-3h2v3q0 .825-.587 1.413T18 20z" />
+                        </svg>
+                    </button>
+                </div>
+                <div id='report'
+                    class="bg-white dark:bg-gray-800 cursor-pointer shadow overflow-hidden rounded-md sm:rounded-lg p-4 flex flex-col gap-3">
+                    <table class="table-auto w-full border border-gray-200 dark:border-gray-700 rounded-md">
+                        <thead>
+                            <tr>
+                                <th class="bg-orange-600 uppercase p-3 text-start text-white" colspan="2">Action
+                                    Plan
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr>
+                                <td colspan="2" class="bg-orange-300 p-2 text-white">File Details</td>
+                            </tr>
+                            <tr>
+                                <td width="50%" class="p-3">
+                                    <table class="border-collapse">
+                                        <tbody>
+                                            <tr>
+                                                <td width="150">
+                                                    <p class="lbl">Action Plan Id</p>
+                                                </td>
+                                                <td>
+                                                    <p>
+                                                        {{ $reportPlanId }}
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p class="lbl">Assigned By</p>
+                                                </td>
+                                                <td>
+                                                    <p>
+                                                        {{ $reportCreatedBy }}
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p class="lbl">Assigned To</p>
+                                                </td>
+                                                <td>
+                                                    <p>
+                                                        {{ $reportAssignedTo }}
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td width="50%">
+                                    <table class="summarytable ovr">
+                                        <tbody>
+                                            <tr>
+                                                <td width="150">
+                                                    <p class="lbl">Status</p>
+                                                </td>
+                                                <td>
+                                                    <p>
+                                                        {{ $reportStatus }}
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p class="lbl">Source</p>
+                                                </td>
+                                                <td>
+                                                    <p>
+                                                        {{ $reportSource }}
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p class="lbl">Date Created</p>
+                                                </td>
+                                                <td>
+                                                    <p>
+                                                        {{ $reportDateCreated }}
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <table class="table-auto w-full border border-gray-200 dark:border-gray-700 rounded-md">
+                        <tbody>
+                            <tr>
+                                <td class="bg-orange-300 p-2 text-white" colspan="2">Nonconformity</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3" width="150">Finding</td>
+                                <td class="flex p-3 gap-2 items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
+                                        viewBox="0 0 24 24">
+                                        <path
+                                            fill="{{ // level 1: yellow, level 2: orange, level 3: red
+                                                $reportGrade == 'level1' ? 'yellow' : ($reportGrade == 'level2' ? 'orange' : 'red') }}"
+                                            d="M12.003 21q-1.866 0-3.51-.708q-1.643-.709-2.859-1.924t-1.925-2.856T3 12.003t.709-3.51Q4.417 6.85 5.63 5.634t2.857-1.925T11.997 3t3.51.709q1.643.708 2.859 1.922t1.925 2.857t.709 3.509t-.708 3.51t-1.924 2.859t-2.856 1.925t-3.509.709" />
+                                    </svg>
+                                    @if ($reportGrade == 'level1')
+                                        <span class="text-yellow-500">Level I</span>
+                                    @endif
+                                    @if ($reportGrade == 'level2')
+                                        <span class="text-orange-600">Level II</span>
+                                    @endif
+                                    @if ($reportGrade == 'level3')
+                                        <span class="text-red-800">Level III</span>
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="p-3">
+                                    <p>
+                                        {{ $reportFinding }}
+                                    </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table-auto w-full border border-gray-200 dark:border-gray-700 rounded-md">
+                        <tbody>
+                            <tr>
+                                <td class="bg-orange-300 p-2 text-white" colspan="2">Correction</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3" width="150">Correction</td>
+                                <td class="p-3">
+                                    {{ $reportCorrection }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="p-3">Completed By</td>
+                                <td class="p-3">
+                                    {{ $reportDateCompleteBy }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="p-3" width="150">Root Cause</td>
+                                <td class="p-3">
+                                    {{ $reportRootCause }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -828,7 +1025,6 @@
         </div>
     </x-modal>
     <script>
-        
         $(document).ready(function() {
             $('.cc').select2({
                 allowClear: true,
@@ -843,5 +1039,38 @@
                 @this.set('source', data, false);
             });
         });
+
+        function printReport() {
+            var printContents = document.getElementById('report').innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+        }
+
+        function downloadPDF(divId, capName) {
+            const element = document.querySelector(divId);
+
+            const formattedCapName = capName.replace(/[^a-zA-Z0-9_-]/g, ''); // Remove unsafe characters
+
+            const options = {
+                margin: 0.5,
+                filename: `${formattedCapName}_CAP_REPORT.pdf`, // Include CAPName in the filename
+                image: {
+                    type: 'jpeg',
+                    quality: 0.98
+                },
+                html2canvas: {
+                    scale: 2
+                },
+                jsPDF: {
+                    unit: 'in',
+                    format: 'letter',
+                    orientation: 'portrait'
+                }
+            };
+
+            html2pdf().set(options).from(element).save();
+        }
     </script>
 </div>

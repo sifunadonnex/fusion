@@ -22,7 +22,7 @@ class Cap extends Model
         'FindingGradeId',
         'RiskGrade',
         'RiskLevel',
-        'RiskDescription',
+        'rootCauseAnalysis',
         'CompleteByCA',
         'DateCompletedCA',
         'CorrectiveActionCA',

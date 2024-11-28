@@ -8,6 +8,7 @@ use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Livewire\Attributes\Url;
 use Livewire\WithPagination;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ActionPlanPage extends Component
 {
@@ -19,11 +20,13 @@ class ActionPlanPage extends Component
     public $status;
     public $assigned_to;
     public $source;
-    public $cc = [];
+    public $cc = ["1", "2"];
     public $finding;
     public $grade;
     public $completedBy;
     public $users = [];
+    public $isRootCause = false;
+    public $isCA = false;
     public $sourceList = [
         'QAD/ AMO /180403',
         'QAD/AMO TECH /180702',
@@ -62,6 +65,18 @@ class ActionPlanPage extends Component
     public $filterByCreatedBy = '';
     public $filterBySource = '';
     public $actionPlan = [];
+    public $reportSource = '';
+    public $reportPlanId = '';
+    public $reportStatus = '';
+    public $reportAssignedTo = '';
+    public $reportCreatedBy = '';
+    public $reportDateCreated = '';
+    public $reportDateCompleted = '';
+    public $reportDateCompleteBy = '';
+    public $reportFinding = '';
+    public $reportGrade = '';
+    public $reportRootCause = '';
+    public $reportCorrection = '';
 
     public function createActionPlan()
     {
@@ -91,9 +106,30 @@ class ActionPlanPage extends Component
 
     public function showActionPlanDetails($id)
     {
+        //clear data if available
+        $this->actionPlan = [];
         $this->actionPlan = Cap::find($id)->toArray();
         // decode the cc users
         $this->actionPlan['IdCCUsers'] = json_decode($this->actionPlan['IdCCUsers']);
+        $this->isCA = $this->actionPlan['isCA_on'] == 1 ? true : false;
+        $this->isRootCause = $this->actionPlan['isRootCause_On'] == 1 ? true : false;
+        $this->reportGrade = $this->actionPlan['FindingGradeId'];
+        $this->reportSource = $this->actionPlan['ReportSource'];
+        $this->reportPlanId = $this->actionPlan['CAPName'];
+        $this->reportStatus = $this->actionPlan['CAPStatusId'];
+        //get name of assigned to from users matching id
+        $this->reportAssignedTo = User::find($this->actionPlan['ResponsiblePersonId'])->name;
+        //get name of created by from users matching id
+        $this->reportCreatedBy = User::find($this->actionPlan['CreatedById'])->name;
+        // format the date to be displayed
+        $this->reportDateCreated = date('Y-m-d', strtotime($this->actionPlan['created_at']));
+        // format the date to be displayed
+        $this->reportDateCompleted = date('Y-m-d', strtotime($this->actionPlan['updated_at']));
+        $this->reportDateCompleteBy = $this->actionPlan['CompleteByCA'];
+        $this->reportFinding = $this->actionPlan['Finding'];
+        $this->reportRootCause = $this->actionPlan['rootCauseAnalysis'];
+        $this->reportCorrection = $this->actionPlan['PreventiveActionPA'];
+        // Show the modal
         $this->showActionPlanDetailsModal = true;
     }
 
