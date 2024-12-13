@@ -517,7 +517,7 @@
                             <span class="text-red-700">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div wire:ignore>
+                    <div wire:ignore class="col-span-2">
                         <label for="cc"
                             class="block text-sm font-medium text-gray-700 dark:text-gray-200">CC</label>
                         <select multiple x-data="" x-init="$nextTick(() => {
@@ -540,8 +540,8 @@
                     <div>
                         <label for="finding"
                             class="block text-sm font-medium text-gray-700 dark:text-gray-200">Finding</label>
-                        <input type="text" wire:model="finding" id="finding" name="finding"
-                            class="form-input w-full" placeholder="Finding">
+                        <textarea rows="3" wire:model="finding" id="finding" name="finding"
+                            class="form-input w-full" placeholder="Finding"></textarea>
                         @error('finding')
                             <span class="text-red-700">{{ $message }}</span>
                         @enderror
@@ -674,7 +674,7 @@
                         <div class="col-span-2" wire:ignore>
                             <label for="cc"
                                 class="block text-sm font-medium text-gray-700 dark:text-gray-200">CC</label>
-                            <select multiple wire:model="cc" name="cc" class="cc" disabled
+                            <select multiple wire:model="actionPlan.IdCCUsers" name="cc" class="cc" disabled
                                 style="width: 100%">
                                 @foreach ($users as $user)
                                     <option value="{{ $user['id'] }}" wire:key="cc-{{ $user['id'] }}">

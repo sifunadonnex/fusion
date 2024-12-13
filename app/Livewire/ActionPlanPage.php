@@ -111,6 +111,7 @@ class ActionPlanPage extends Component
         $this->actionPlan = Cap::find($id)->toArray();
         // decode the cc users
         $this->actionPlan['IdCCUsers'] = json_decode($this->actionPlan['IdCCUsers']);
+        //dd($this->actionPlan);
         $this->isCA = $this->actionPlan['isCA_on'] == 1 ? true : false;
         $this->isRootCause = $this->actionPlan['isRootCause_On'] == 1 ? true : false;
         $this->reportGrade = $this->actionPlan['FindingGradeId'];
